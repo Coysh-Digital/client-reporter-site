@@ -84,7 +84,7 @@ export default defineConfig({
         outline: { level: [2, 3] },
         footer: {
             message: 'Open source under the MIT licence. Free to use, fork and ship.',
-            copyright: 'Made by Tim Coysh',
+            copyright: 'Made by Coysh Digital',
         },
     },
 });

@@ -8,7 +8,7 @@ pageClass: sample-page
 
 # A report it made
 
-This is a real report Client Reporter put together — nothing mocked up. It's branded end to end as the agency (Coysh Digital here), with no Client Reporter name anywhere a client would see. A real report is a web page you share with a link, or send as a PDF or an email; this is a picture of one.
+This is a real report Client Reporter put together — nothing mocked up. It's branded end to end as the agency — Northline Studio, an example agency, here, with no Client Reporter name anywhere a client would see. A real report is a web page you share with a link, or send as a PDF or an email; this is a picture of one.
 
 <p class="sample-actions">
   <a class="sample-btn" href="/docs/installation">Install it</a>
