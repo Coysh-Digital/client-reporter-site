@@ -5,26 +5,26 @@ const repo = 'https://github.com/coysh-digital/client-reporter';
 
 const steps = [
     {
-        title: 'Connect the services',
-        body: 'Point Client Reporter at the tools behind each site — the CMS, analytics, shop, uptime monitor. WordPress and Craft connect through a small read-only plugin; most others connect once for the whole workspace.',
+        title: 'I connect the sources',
+        body: 'I point it at the tools behind a site — the CMS, analytics, search console, the shop, the uptime monitor. WordPress and Craft connect through a small read-only plugin; the rest take an API key or a login, usually once for every site at once.',
     },
     {
-        title: 'It collects on a schedule',
-        body: 'Laravel’s scheduler pulls the numbers in for you and keeps them together, per site and per client. One cron line runs the lot — no worker to babysit, happy on cheap shared hosting.',
+        title: 'It collects on its own',
+        body: 'From then on it pulls the numbers in on a schedule and keeps them together, per site and per client. One cron line runs the lot. I don’t touch it between reports.',
     },
     {
-        title: 'You brand it and send',
-        body: 'Arrange the sections, apply your branding, and hand it over as a secure link, a PDF, or an email in your name. Or let the client sign in to a portal that only shows their own reports.',
+        title: 'The report is already there',
+        body: 'When I need to send one, the numbers are waiting. I pick the sections, it comes out in my branding, and I send a link, a PDF, or an email. That’s the whole job.',
     },
 ];
 
 const features = [
-    ['One tidy structure', 'Client → Sites → Integrations → Data → Reports. Nothing more to learn than that.'],
-    ['Fully white-label', 'Your logo, your colours, your name. Your clients never see a Client Reporter logo anywhere.'],
-    ['Plain-English summaries', 'Worked out straight from the numbers — nothing invented, nothing to hallucinate.'],
-    ['Room for your team', 'Administrator, Manager and Viewer roles, plus a locked-down portal for the people you report to.'],
-    ['Read-only by design', 'The companion plugins only ever read. Every request is signed; nothing is written back to a client’s site.'],
-    ['Yours to keep', 'You host it, you own the data. No seats, no per-client pricing, no licence keys, nothing phoning home.'],
+    ['Lots of sources', 'CMS, analytics, search, the shop, uptime, performance and invoices — twenty integrations, all feeding one report.'],
+    ['Collected on a schedule', 'The numbers arrive on their own, so the report is already put together by the time I need it.'],
+    ['My branding, not its own', 'Every report goes out as my agency — logo, colours, name. There’s no Client Reporter logo anywhere a client can see.'],
+    ['Written from the numbers', 'The plain-English summaries come straight from the data that was collected. Nothing is invented.'],
+    ['A page per client', 'Each client’s sites, data and reports sit in one place. There’s a portal so a client can see their own.'],
+    ['On my own server', 'I host it, so the data stays with me. Nothing is sent anywhere I don’t control.'],
 ];
 
 const integrations = [
@@ -42,7 +42,7 @@ const notFor = [
     'a deployment tracker, server monitor, or anything that SSHes into boxes',
     'a backup, malware-scanning or “update all the plugins for me” tool — the companion plugins are read-only',
     'its own uptime monitor — it plugs into UptimeRobot, Uptime Kuma or Better Uptime instead',
-    'your invoicing or accounting system — it can show invoices from FreeAgent or Xero in a report, and that’s it',
+    'an invoicing or accounting system — it can show invoices from FreeAgent or Xero in a report, and that’s it',
     'a CRM, a project manager, or an integration marketplace',
 ];
 </script>
@@ -52,12 +52,12 @@ const notFor = [
         <!-- Masthead / hero -->
         <header class="masthead">
             <div class="wrap">
-                <p class="dateline">Self-hosted · Open source · MIT licence</p>
-                <h1 class="title">Reports your clients<br class="br" /> are glad to open.</h1>
+                <p class="dateline">Self-hosted · Open source · Free</p>
+                <h1 class="title">All the numbers behind a<br class="br" /> client’s site, in one report.</h1>
                 <p class="standfirst">
-                    Client Reporter pulls the numbers from the tools your clients’ sites already run on — their CMS,
-                    analytics, shop and uptime monitor — and turns them into a clean, branded report you host and own.
-                    Free, and yours to keep.
+                    I built Client Reporter to stop hand-assembling reports every month. It connects to the CMS,
+                    analytics, shop, search and uptime monitor behind each site I look after, pulls the numbers in on a
+                    schedule, and puts them into one report I can send. I run it on my own server, so the data stays mine.
                 </p>
                 <div class="actions">
                     <a class="btn" :href="withBase('/docs/installation')">Install it</a>
@@ -69,12 +69,12 @@ const notFor = [
             <figure class="plate">
                 <img
                     :src="withBase('/images/dashboard.png')"
-                    alt="The Client Reporter dashboard: a portfolio of client sites, their health, and reports ready to send"
+                    alt="The Client Reporter dashboard: every client site, its health, and the reports that are ready to send"
                     width="1440"
                     height="900"
                     loading="eager"
                 />
-                <figcaption>Fig. 1 — The dashboard: every client site, its health, and what’s ready to send.</figcaption>
+                <figcaption>Fig. 1 — The dashboard: every site I look after, its health, and what’s ready to send.</figcaption>
             </figure>
         </header>
 
@@ -82,18 +82,19 @@ const notFor = [
         <section class="wrap sec">
             <div class="sec-head">
                 <span class="num">01</span>
-                <h2>Why this exists</h2>
+                <h2>Why I built it</h2>
             </div>
             <div class="prose two-col">
                 <p>
-                    I got tired of paying a monthly fee, per client, to a SaaS just to send people a tidy monthly report —
-                    and of the data living on someone else’s server. So I built the thing I wanted: you host it, you own
-                    the data, and it’s free. No seats, no per-client pricing, no licence keys, nothing to phone home.
+                    I look after a stack of client sites, and once a month each one needs a report — pulling numbers out of
+                    analytics, the shop, the uptime monitor and a handful of other tools, then laying them out so a client
+                    can read them. Doing that by hand, per client, got old fast, and the tools that do it for you charge per
+                    client and keep the data on their servers.
                 </p>
                 <p>
-                    One install is for one agency. It’s not a multi-tenant SaaS, and it’s not trying to be everything — it
-                    does client reporting and tries to do that one thing really well. It’s also early days, so expect a few
-                    rough edges and give it a test run before you point real clients at it.
+                    So this is the version I wanted: it gathers everything itself and I host it, so the data is mine. One
+                    install is for one agency — it’s not a multi-tenant SaaS, and it doesn’t try to be everything. It does
+                    client reporting. It’s also early, so there are still rough edges.
                 </p>
             </div>
         </section>
@@ -115,11 +116,11 @@ const notFor = [
             </div>
         </section>
 
-        <!-- 03 What you get -->
+        <!-- 03 What it is -->
         <section class="wrap sec">
             <div class="sec-head">
                 <span class="num">03</span>
-                <h2>What you get</h2>
+                <h2>What it does</h2>
             </div>
             <div class="grid">
                 <div v-for="[title, body] in features" :key="title" class="cell">
@@ -134,19 +135,18 @@ const notFor = [
             <div class="wrap sec">
                 <div class="sec-head">
                     <span class="num">04</span>
-                    <h2>The report is the point</h2>
+                    <h2>A report it made</h2>
                 </div>
                 <div class="report-copy">
                     <p>
-                        Branding cascades from your agency to each client to each site, so you set a house style once and
-                        tweak it where it matters. Pick the sections a client cares about — traffic, search, sales, uptime,
-                        performance, downloads, invoices — or save the arrangement as a template. Then send it as a secure
-                        link, a PDF, or an email, entirely in your name.
+                        I set my branding once and it flows down to every client and every site. For each report I pick the
+                        sections that matter for that client — traffic, search, sales, uptime, performance, downloads,
+                        invoices — and send it as a secure link, a PDF, or an email. Here’s one it put together:
                     </p>
                 </div>
                 <figure class="plate plate-inline">
-                    <img :src="withBase('/images/report-example.png')" alt="A finished client report, branded end to end for the agency" loading="lazy" />
-                    <figcaption>Fig. 2 — A finished report, branded end to end. No Client Reporter logo in sight.</figcaption>
+                    <img :src="withBase('/images/report-example.png')" alt="The cover and overview of a report Client Reporter generated, in the agency's own branding" loading="lazy" />
+                    <figcaption>Fig. 2 — The cover and overview of a report it generated, in my branding.</figcaption>
                 </figure>
             </div>
         </section>
@@ -155,9 +155,9 @@ const notFor = [
         <section class="wrap sec">
             <div class="sec-head">
                 <span class="num">05</span>
-                <h2>Plugs into what you already use</h2>
+                <h2>Where the numbers come from</h2>
             </div>
-            <p class="lead">Twenty integrations so far, across eight categories. Most connect once for the whole workspace and match themselves to your sites.</p>
+            <p class="lead">These are the sources it pulls in — twenty so far, across eight categories. Most connect once for the whole workspace and match themselves to my sites.</p>
             <div class="index">
                 <div v-for="group in integrations" :key="group.category" class="index-col">
                     <p class="index-cat">{{ group.category }}</p>
@@ -168,8 +168,8 @@ const notFor = [
             </div>
             <p class="note">
                 WordPress and Craft connect through small companion plugins that only ever hand back read-only data over
-                signed requests. Missing something? There’s a small SDK and a generator for
-                <a :href="withBase('/docs/creating-an-integration')">writing your own</a>.
+                signed requests. If a source I use isn’t here, there’s a small SDK and a generator for
+                <a :href="withBase('/docs/creating-an-integration')">adding one</a>.
             </p>
         </section>
 
@@ -178,13 +178,13 @@ const notFor = [
             <div class="wrap sec">
                 <div class="sec-head">
                     <span class="num">06</span>
-                    <h2>What it deliberately doesn’t do</h2>
+                    <h2>What it doesn’t do</h2>
                 </div>
-                <p class="lead">Keeping the scope tight is a feature, not laziness. On purpose, Client Reporter is <strong>not</strong>:</p>
+                <p class="lead">I kept it to one job. On purpose, it’s <strong>not</strong>:</p>
                 <ul class="ruled">
                     <li v-for="item in notFor" :key="item">{{ item }}</li>
                 </ul>
-                <p class="note">If you need one of those, there are great dedicated tools for it — this happily stays in its lane.</p>
+                <p class="note">There are good dedicated tools for each of those. This one just does the reporting.</p>
             </div>
         </section>
 
@@ -192,9 +192,9 @@ const notFor = [
         <section class="wrap sec start">
             <div class="sec-head">
                 <span class="num">→</span>
-                <h2>Getting it running</h2>
+                <h2>Running it yourself</h2>
             </div>
-            <p class="lead">Four steps, none of them scary. Clone it, point a web server at <code>public/</code>, open it in your browser for the install wizard, and add one cron line.</p>
+            <p class="lead">It’s a Laravel app. Clone it, point a web server at <code>public/</code>, open it in your browser for the install wizard, and add one cron line. SQLite works out of the box, so there’s nothing else to set up.</p>
             <pre class="code"><code>git clone https://github.com/coysh-digital/client-reporter.git
 cd client-reporter
 composer install
@@ -203,7 +203,7 @@ npm install &amp;&amp; npm run build
 <span class="muted"># then, once installed, one cron line runs everything</span>
 * * * * * php /path/to/artisan schedule:run</code></pre>
             <div class="actions">
-                <a class="btn" :href="withBase('/docs/installation')">Read the install guide</a>
+                <a class="btn" :href="withBase('/docs/installation')">The install guide</a>
                 <a class="textlink" :href="withBase('/docs/shared-hosting')">Running on shared hosting →</a>
             </div>
         </section>
@@ -213,9 +213,10 @@ npm install &amp;&amp; npm run build
             <div class="wrap">
                 <p class="mark">Client Reporter</p>
                 <p>
-                    Free and open source under the MIT licence. Contributions — code, docs, bug reports, or just telling me
-                    what’s confusing — are genuinely welcome on <a :href="repo" rel="noopener">GitHub</a>. Found a security
-                    issue? Please report it privately, per the <a :href="withBase('/docs/security')">security guide</a>.
+                    I’m Tim. I built this for my own agency and made it open source under the MIT licence, in case it’s
+                    useful to you too. It’s early, so expect rough edges — code, docs and bug reports are all welcome on
+                    <a :href="repo" rel="noopener">GitHub</a>. If you find a security issue, please report it privately, per
+                    the <a :href="withBase('/docs/security')">security guide</a>.
                 </p>
                 <p class="by">Made by Tim Coysh</p>
             </div>
