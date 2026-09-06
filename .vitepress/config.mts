@@ -8,13 +8,14 @@ export default defineConfig({
     // GitHub Pages serves a project site under /<repo>/; Cloudflare Pages and custom domains use /.
     base: process.env.SITE_BASE ?? '/',
     cleanUrls: true,
+    appearance: false,
     srcExclude: ['README.md'],
     lastUpdated: false,
     head: [
         ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
         ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
         ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
-        ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap' }],
+        ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap' }],
         ['meta', { property: 'og:title', content: 'Client Reporter' }],
         ['meta', { property: 'og:description', content: 'Free, self-hosted client reporting for web agencies and freelancers.' }],
         ['meta', { property: 'og:image', content: '/images/dashboard.png' }],
