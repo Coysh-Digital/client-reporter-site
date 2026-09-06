@@ -66,15 +66,21 @@ const notFor = [
                 </div>
             </div>
 
-            <figure class="plate">
-                <img
-                    :src="withBase('/images/dashboard.png')"
-                    alt="The Client Reporter dashboard: every client site, its health, and the reports that are ready to send"
-                    width="1440"
-                    height="900"
-                    loading="eager"
-                />
-                <figcaption>Fig. 1 — The dashboard: every site we look after, its health, and what’s ready to send.</figcaption>
+            <figure class="shot-figure">
+                <div class="browser">
+                    <div class="browser-bar">
+                        <span class="browser-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                        <span class="browser-url">clientreporter.yourdomain.com</span>
+                    </div>
+                    <img
+                        :src="withBase('/images/dashboard.png')"
+                        alt="A screenshot of the Client Reporter dashboard: every client site, its health, and the reports that are ready to send"
+                        width="1440"
+                        height="900"
+                        loading="eager"
+                    />
+                </div>
+                <figcaption>Fig. 1 — A screenshot of the dashboard: every site we look after, its health, and what’s ready to send.</figcaption>
             </figure>
         </header>
 
@@ -327,6 +333,73 @@ p {
 
 .textlink:hover {
     border-bottom-color: currentColor;
+}
+
+/* The hero screenshot, shown in a light browser frame so it reads clearly as
+   a screenshot of the running app. */
+.shot-figure {
+    margin: clamp(44px, 6vw, 72px) auto 0;
+    max-width: 1040px;
+    padding: 0 var(--pad);
+}
+
+.browser {
+    border: 1px solid var(--cr-line-strong);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--cr-surface);
+    box-shadow: 0 40px 90px -45px rgba(27, 26, 24, 0.4);
+}
+
+.browser-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 16px;
+    background: #f1ede6;
+    border-bottom: 1px solid var(--cr-line);
+}
+
+.browser-dots {
+    display: inline-flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.browser-dots span {
+    width: 11px;
+    height: 11px;
+    border-radius: 999px;
+    background: #d3ccbf;
+}
+
+.browser-url {
+    flex: 1;
+    text-align: center;
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 4px 14px;
+    background: var(--cr-surface);
+    border: 1px solid var(--cr-line);
+    border-radius: 999px;
+    font-family: var(--cr-mono);
+    font-size: 0.76rem;
+    color: var(--cr-faint);
+}
+
+.browser img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.shot-figure figcaption {
+    margin-top: 14px;
+    font-family: var(--cr-serif);
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--cr-faint);
+    text-align: center;
 }
 
 /* Framed plates (figures) with captions — the editorial signature. */
