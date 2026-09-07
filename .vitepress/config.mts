@@ -66,6 +66,7 @@ export default defineConfig({
                     items: [
                         { text: 'Ask an AI (MCP)', link: '/docs/mcp' },
                         { text: 'Creating an integration', link: '/docs/creating-an-integration' },
+                        { text: 'Integration pull requests', link: '/docs/contributing' },
                         { text: 'Development', link: '/docs/development' },
                     ],
                 },
@@ -76,6 +77,9 @@ export default defineConfig({
             pattern: ({ relativePath }) => {
                 // Serialised into the client bundle, so it cannot close over `repo`.
                 const section = relativePath.replace(/^docs\//, '').replace(/\.md$/, '');
+                if (section === 'contributing') {
+                    return 'https://github.com/coysh-digital/client-reporter-site/edit/main/docs/contributing.md';
+                }
                 return `https://github.com/coysh-digital/client-reporter/edit/main/docs/${section === 'index' ? '' : `${section}/`}README.md`;
             },
             text: 'Improve this page on GitHub',

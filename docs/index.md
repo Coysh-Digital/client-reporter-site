@@ -38,6 +38,7 @@ Also bundled and covered in the [integrations overview](/docs/integrations): **S
 
 - [Development](/docs/development) - contributing to the core application.
 - [Creating an integration](/docs/creating-an-integration) - building an integration with the Integration SDK.
+- [Contributing and integration pull requests](/docs/contributing) - proposing an integration for inclusion in the core project.
 
 ## Security
 

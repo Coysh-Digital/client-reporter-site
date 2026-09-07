@@ -131,4 +131,8 @@ That gives you the skeleton - manifest, config fields, auth method, collectors, 
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/coysh-digital/client-reporter/blob/main/CONTRIBUTING.md) for the branch naming, commit and pull request process, the issue templates (bug report, feature request, integration proposal), and what's deliberately out of scope.
+See [Contributing and integration pull requests](/docs/contributing) for how to propose an integration for the core project, and [CONTRIBUTING.md](https://github.com/coysh-digital/client-reporter/blob/main/CONTRIBUTING.md) for the branch naming, commit and pull request process, the issue templates, and what's deliberately out of scope.
+
+## A note on AI
+
+In the spirit of being upfront: I used AI tooling while building this plugin, to think through approaches, to speed up some of the groundwork, and to help draft these docs. It was a tool in the workshop, not the builder. Every line of code was reviewed, tested and put in place by a developer who understood it, and nothing shipped that I could not explain and stand behind. The judgement calls and the final code are human.
