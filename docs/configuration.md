@@ -14,7 +14,7 @@ The install wizard writes your database settings for you, but you can also set t
 
 ### SQLite (default)
 
-The simplest option, and the default — there's no server to set up. The database is just a single file at `database/database.sqlite`:
+The simplest option, and the default - there's no server to set up. The database is just a single file at `database/database.sqlite`:
 
 ```dotenv
 DB_CONNECTION=sqlite
@@ -44,7 +44,7 @@ DB_USERNAME=your_user
 DB_PASSWORD=your_password
 ```
 
-After you change the connection, run `php artisan migrate`. If you're switching databases on an install that already has data, migrate the schema into the new database first — heads up, Client Reporter won't move your existing data between database engines for you.
+After you change the connection, run `php artisan migrate`. If you're switching databases on an install that already has data, migrate the schema into the new database first - heads up, Client Reporter won't move your existing data between database engines for you.
 
 ## Cache, session and queue drivers
 
@@ -66,13 +66,13 @@ REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
 ```
 
-Redis is completely optional — the database drivers are fully supported in production, so don't feel you're missing out by not running it.
+Redis is completely optional - the database drivers are fully supported in production, so don't feel you're missing out by not running it.
 
 ## Queue processing
 
 Data collection and the other background work run through Laravel's queue. There are two ways to process it:
 
-- **Scheduler-driven (default, shared-hosting friendly).** The scheduler runs `queue:work --stop-when-empty --max-time=55` every minute, draining the database queue on each tick. All it needs is the single `schedule:run` cron entry — no long-running process. This is the one I'd recommend on shared hosting.
+- **Scheduler-driven (default, shared-hosting friendly).** The scheduler runs `queue:work --stop-when-empty --max-time=55` every minute, draining the database queue on each tick. All it needs is the single `schedule:run` cron entry - no long-running process. This is the one I'd recommend on shared hosting.
 - **Persistent worker (VPS).** Run a long-lived `php artisan queue:work` (managed by systemd/supervisor, or Laravel Horizon with Redis) for lower latency. If you go this route, remove the `queue:work` line from `routes/console.php` so jobs aren't processed twice.
 
 See [Shared hosting](/docs/shared-hosting) for the cron setup and [when to move to a VPS](/docs/shared-hosting#when-to-move-to-a-vps).
@@ -89,7 +89,7 @@ You can export reports to PDF with one of two drivers:
 
 | Driver | Requirements | Best for |
 | --- | --- | --- |
-| **dompdf** (default) | None — pure PHP | Shared hosting; zero dependencies |
+| **dompdf** (default) | None - pure PHP | Shared hosting; zero dependencies |
 | **browsershot** | Node.js + headless Chromium on the server | Pixel-perfect Tailwind fidelity on a VPS |
 
 The default is set in `.env` and `config/client-reporter.php`:
@@ -100,7 +100,7 @@ CLIENT_REPORTER_PDF_DRIVER=dompdf
 LARAVEL_PDF_DOMPDF_REMOTE_ENABLED=true
 ```
 
-You can also switch the driver at runtime from the admin **Settings** page (`pdf_driver`, options `dompdf` or `browsershot`). The saved setting wins over the config default, so on a VPS you can flip to Browsershot without editing any files. The report views are written to render correctly under dompdf — if you're writing your own report blocks, have a look at the [Development](/docs/development#dompdf-safe-report-views) notes.
+You can also switch the driver at runtime from the admin **Settings** page (`pdf_driver`, options `dompdf` or `browsershot`). The saved setting wins over the config default, so on a VPS you can flip to Browsershot without editing any files. The report views are written to render correctly under dompdf - if you're writing your own report blocks, have a look at the [Development](/docs/development#dompdf-safe-report-views) notes.
 
 ## Mail
 
@@ -123,15 +123,15 @@ Use whatever transport your host supports (SMTP, a transactional-mail API, whate
 
 A few product-specific settings live in `config/client-reporter.php`. Most have sensible defaults, and the important ones are also on the admin Settings page.
 
-- **`version` / `repository`** — product identity, used by the admin UI and the GitHub update checker. Keep `version` in sync with tagged releases.
-- **`integrations`** — the first-party integration classes bundled with the app. Third-party integrations are discovered automatically from installed Composer packages, so you rarely edit this.
-- **`report_blocks`** — the core report blocks always available in the builder.
-- **`collection.default_interval`** — default minutes between collections for a connection (360 = 6 hours).
-- **`collection.retention_days`** — how long collected metrics/snapshots are kept (`null` = keep everything; recommended so historical reports stay accurate).
-- **`connectors.timestamp_tolerance`** — replay-protection window (seconds) for signed requests from the WordPress/Craft companion plugins.
-- **`pdf.driver`** — default PDF renderer (see above).
-- **`reports.default_share_expiry_days`** — default expiry for public share links (`null` = no expiry).
-- **`updates.enabled`** — whether to check GitHub for newer releases and notify admins. Client Reporter never updates itself; see [Updating](/docs/updating).
+- **`version` / `repository`** - product identity, used by the admin UI and the GitHub update checker. Keep `version` in sync with tagged releases.
+- **`integrations`** - the first-party integration classes bundled with the app. Third-party integrations are discovered automatically from installed Composer packages, so you rarely edit this.
+- **`report_blocks`** - the core report blocks always available in the builder.
+- **`collection.default_interval`** - default minutes between collections for a connection (360 = 6 hours).
+- **`collection.retention_days`** - how long collected metrics/snapshots are kept (`null` = keep everything; recommended so historical reports stay accurate).
+- **`connectors.timestamp_tolerance`** - replay-protection window (seconds) for signed requests from the WordPress/Craft companion plugins.
+- **`pdf.driver`** - default PDF renderer (see above).
+- **`reports.default_share_expiry_days`** - default expiry for public share links (`null` = no expiry).
+- **`updates.enabled`** - whether to check GitHub for newer releases and notify admins. Client Reporter never updates itself; see [Updating](/docs/updating).
 
 Relevant environment variables:
 
@@ -147,7 +147,7 @@ Collected data accumulates. What is kept, and what trims it:
 
 - **Metrics and snapshots** (the per-period figures and per-day series each collector writes) are kept forever unless you set **Retention** on the Settings page, in which case anything older than that many days is pruned by the daily `client-reporter:collect` run. Generated reports keep their own frozen copy of the data, so pruning never changes a report a client has already received.
 - **Collection run history** (the Activity page) is pruned automatically after 90 days.
-- **Report renders** — each generation freezes a render; the newest five per report are kept and older ones are removed automatically.
+- **Report renders** - each generation freezes a render; the newest five per report are kept and older ones are removed automatically.
 - **Cached favicons and uploaded logos** live in `storage/app/public/` and are small.
 - **Queue and failed-job tables** are cleared as jobs complete; failed jobs stay until you retry or dismiss them from the Activity page.
 
@@ -175,4 +175,4 @@ The Settings page also shows your current version, the installation date, and th
 
 ## Storing integration credentials
 
-Integration credentials (API keys, OAuth tokens, connector secrets) are stored encrypted in the database using your `APP_KEY`. Keep `APP_KEY` secret and back it up — if you lose it, your stored credentials can't be recovered. See [Security](/docs/security) for the details.
+Integration credentials (API keys, OAuth tokens, connector secrets) are stored encrypted in the database using your `APP_KEY`. Keep `APP_KEY` secret and back it up - if you lose it, your stored credentials can't be recovered. See [Security](/docs/security) for the details.

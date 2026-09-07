@@ -5,23 +5,23 @@ const repo = 'https://github.com/coysh-digital/client-reporter';
 
 const steps = [
     {
-        title: 'We connect the tools behind a site',
-        body: 'We point it at the CMS, analytics, search console, the shop, the uptime monitor. WordPress and Craft connect through a small read-only plugin; the rest take an API key or a login, usually once for every site at once.',
+        title: 'Connect the services behind a site',
+        body: 'Connect the CMS, analytics, search console, shop and uptime monitor. Each connection uses an API key, a login or a small read-only CMS plugin.',
     },
     {
         title: 'It collects on its own',
-        body: 'From then on it pulls the numbers in on a schedule and keeps them together, per site and per client. One cron line runs the lot. We don’t touch it between reports.',
+        body: 'From then on Client Reporter pulls the numbers in on a schedule and keeps them together, per site and per client. One cron line runs the lot.',
     },
     {
         title: 'The report is already there',
-        body: 'When we need to send one, the numbers are waiting. We pick the sections, it comes out in our branding, and we send a link, a PDF, or an email. That’s the whole job.',
+        body: 'When a report is ready to send, the numbers are waiting. Pick the sections and Client Reporter applies your branding, ready to share as a link, a PDF or an email.',
     },
 ];
 
 const features = [
-    ['Twenty integrations', 'CMS, analytics, search, the shop, uptime, performance and invoices — all feeding one report.'],
+    ['Twenty integrations', 'CMS, analytics, search, the shop, uptime, performance and invoices - all feeding one report.'],
     ['Collected on a schedule', 'The numbers arrive on their own, so the report is already put together by the time you need it.'],
-    ['Your branding, not ours', 'Every report goes out as your agency — logo, colours, name. There’s no Client Reporter logo anywhere a client can see.'],
+    ['Fully agency-branded', 'Every report goes out with your agency’s logo, colours and name. There’s no Client Reporter logo anywhere a client can see.'],
     ['Written from the numbers', 'The plain-English summaries come straight from the data that was collected. Nothing is invented.'],
     ['A page per client', 'Each client’s sites, data and reports sit in one place, with a portal so a client can see their own.'],
     ['Completely free, self-hosted', 'It’s free and open source, and it runs on your own server. The data stays with you and nothing phones home.'],
@@ -38,13 +38,6 @@ const integrations = [
     { category: 'Billing', items: ['FreeAgent', 'Xero'] },
 ];
 
-const notFor = [
-    'a deployment tracker, server monitor, or anything that SSHes into boxes',
-    'a backup, malware-scanning or “update all the plugins for me” tool — the companion plugins are read-only',
-    'its own uptime monitor — it plugs into UptimeRobot, Uptime Kuma or Better Uptime instead',
-    'an invoicing or accounting system — it can show invoices from FreeAgent or Xero in a report, and that’s it',
-    'a CRM, a project manager, or an integration marketplace',
-];
 </script>
 
 <template>
@@ -55,13 +48,12 @@ const notFor = [
                 <p class="dateline">Completely free · Open source · Self-hosted</p>
                 <h1 class="title">All the numbers behind a<br class="br" /> client’s site, in one report.</h1>
                 <p class="standfirst">
-                    We connect to everything behind a client’s site — CMS, analytics, shop, search, uptime — and turn it into
-                    one branded report. We built it for our own agency; it’s completely free and open source, and you host it
-                    yourself.
+                    Client Reporter connects to the services behind a client’s site - CMS, analytics, shop, search and uptime -
+                    and turns the data into one branded report. It’s completely free and open source, and you host it yourself.
                 </p>
                 <div class="actions">
                     <a class="btn" :href="withBase('/docs/installation')">Install it</a>
-                    <a class="textlink" :href="withBase('/sample-report')">See a sample report →</a>
+                    <a class="textlink" :href="withBase('/sample-report.html')">See a sample report →</a>
                     <a class="textlink" :href="repo" rel="noopener">Source on GitHub ↗</a>
                 </div>
             </div>
@@ -80,7 +72,6 @@ const notFor = [
                         loading="eager"
                     />
                 </div>
-                <figcaption>Fig. 1 — A screenshot of the dashboard: every site we look after, its health, and what’s ready to send.</figcaption>
             </figure>
         </header>
 
@@ -92,14 +83,14 @@ const notFor = [
             </div>
             <div class="prose two-col">
                 <p>
-                    We’re a web agency, and we look after a stack of client sites. Every month each one needs a report —
+                    We’re a web agency, and we look after a stack of client sites. Every month each one needs a report -
                     pulling numbers out of analytics, the shop, the uptime monitor and a handful of other tools, then laying
                     them out so a client can read them. Doing that by hand, per client, got old fast, and the tools that do it
                     for you charge per client and keep the data on their servers.
                 </p>
                 <p>
                     So we built the version we wanted: it gathers everything itself, we host it, and the data stays ours. It’s
-                    completely free and open source. One install is for one agency — it’s not a multi-tenant SaaS, and it
+                    completely free and open source. One install is for one agency - it’s not a multi-tenant SaaS, and it
                     doesn’t try to be everything. It does client reporting. It’s also early, so there are still rough edges.
                 </p>
             </div>
@@ -141,19 +132,14 @@ const notFor = [
             <div class="wrap sec">
                 <div class="sec-head">
                     <span class="num">04</span>
-                    <h2>A report it made</h2>
+                    <h2>See a sample report</h2>
                 </div>
                 <div class="report-copy">
-                    <p>
-                        We set our branding once and it flows down to every client and every site. For each report we pick the
-                        sections that matter for that client — traffic, search, sales, uptime, performance, downloads,
-                        invoices — and send it as a secure link, a PDF, or an email. Here’s one it put together:
-                    </p>
-                    <a class="report-link" :href="withBase('/sample-report')">See the full sample report →</a>
+                    <p>A real, agency-branded report generated by Client Reporter.</p>
+                    <a class="report-link" :href="withBase('/sample-report.html')">Open the sample report →</a>
                 </div>
-                <a class="plate plate-inline" :href="withBase('/sample-report')">
+                <a class="plate plate-inline" :href="withBase('/sample-report.html')">
                     <img :src="withBase('/images/report-example.png')" alt="The cover and overview of a report Client Reporter generated, in the agency's own branding" loading="lazy" />
-                    <span class="plate-cap">Fig. 2 — the top of a report it generated, in our branding. See the full one →</span>
                 </a>
             </div>
         </section>
@@ -162,9 +148,9 @@ const notFor = [
         <section class="wrap sec">
             <div class="sec-head">
                 <span class="num">05</span>
-                <h2>Integrations</h2>
+                <h2>Everything Client Reporter can pull from</h2>
             </div>
-            <p class="lead">Everything it can pull from — twenty integrations so far, across eight categories. Most connect once for the whole workspace and match themselves to your sites.</p>
+            <p class="lead">Twenty integrations so far, across eight categories.</p>
             <div class="index">
                 <div v-for="group in integrations" :key="group.category" class="index-col">
                     <p class="index-cat">{{ group.category }}</p>
@@ -178,21 +164,6 @@ const notFor = [
                 signed requests. If an integration you use isn’t here, there’s a small SDK and a generator for
                 <a :href="withBase('/docs/creating-an-integration')">adding one</a>.
             </p>
-        </section>
-
-        <!-- 06 Boundaries -->
-        <section class="band">
-            <div class="wrap sec">
-                <div class="sec-head">
-                    <span class="num">06</span>
-                    <h2>What it doesn’t do</h2>
-                </div>
-                <p class="lead">We kept it to one job. On purpose, it’s <strong>not</strong>:</p>
-                <ul class="ruled">
-                    <li v-for="item in notFor" :key="item">{{ item }}</li>
-                </ul>
-                <p class="note">There are good dedicated tools for each of those. This one just does the reporting.</p>
-            </div>
         </section>
 
         <!-- Get started -->
@@ -222,7 +193,7 @@ npm install &amp;&amp; npm run build
                 <p>
                     We’re Coysh Digital, a web agency. We built Client Reporter for our own client work and made it completely
                     free and open source under the MIT licence, in case it’s useful to you too. It’s early, so expect rough
-                    edges — code, docs and bug reports are all welcome on <a :href="repo" rel="noopener">GitHub</a>. If you find
+                    edges - code, docs and bug reports are all welcome on <a :href="repo" rel="noopener">GitHub</a>. If you find
                     a security issue, please report it privately, per the <a :href="withBase('/docs/security')">security guide</a>.
                 </p>
                 <p class="by">Made by Coysh Digital</p>
@@ -393,16 +364,7 @@ p {
     height: auto;
 }
 
-.shot-figure figcaption {
-    margin-top: 14px;
-    font-family: var(--cr-serif);
-    font-style: italic;
-    font-size: 0.92rem;
-    color: var(--cr-faint);
-    text-align: center;
-}
-
-/* Framed plates (figures) with captions — the editorial signature. */
+/* Framed report preview. */
 .plate {
     margin: clamp(44px, 6vw, 72px) auto 0;
     max-width: 1080px;
@@ -416,15 +378,6 @@ p {
     border: 1px solid var(--cr-line-strong);
     border-radius: 4px;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
-}
-
-.plate figcaption {
-    margin-top: 14px;
-    font-family: var(--cr-serif);
-    font-style: italic;
-    font-size: 0.92rem;
-    color: var(--cr-faint);
-    text-align: center;
 }
 
 /* Sections */
@@ -492,7 +445,7 @@ p {
     margin-bottom: 34px;
 }
 
-/* 02 How it works — big serif numerals, no cards */
+/* 02 How it works - big serif numerals, no cards */
 .how {
     list-style: none;
     margin: 0;
@@ -615,23 +568,13 @@ a.plate-inline {
     text-decoration: none;
 }
 
-.plate-cap {
-    display: block;
-    margin-top: 14px;
-    font-family: var(--cr-serif);
-    font-style: italic;
-    font-size: 0.92rem;
-    color: var(--cr-faint);
-    text-align: center;
-}
-
 .plate-inline {
     margin-top: 40px;
     padding: 0;
     max-width: none;
 }
 
-/* 05 Integrations — an index/directory */
+/* 05 Integrations - an index/directory */
 .index {
     display: grid;
     gap: 30px 40px;
@@ -683,30 +626,6 @@ a.plate-inline {
 .colophon a {
     color: var(--cr-accent);
     font-weight: 600;
-}
-
-/* 06 Boundaries — ruled list */
-.ruled {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border-top: 1px solid var(--cr-line);
-    max-width: 72ch;
-}
-
-.ruled li {
-    padding: 15px 0 15px 28px;
-    border-bottom: 1px solid var(--cr-line);
-    color: var(--cr-ink);
-    line-height: 1.6;
-    position: relative;
-}
-
-.ruled li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: var(--cr-brass);
 }
 
 /* Get started */

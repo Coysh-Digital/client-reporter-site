@@ -2,7 +2,7 @@
 
 # Creating an integration
 
-Missing a service you use? You can add it yourself. This is the guide to the Integration SDK — how an integration hangs together, how Client Reporter finds it, and how to build and test one. Every bundled integration uses this exact same SDK, so honestly the best reference of all is the `app/Integrations/*` folder in the core app — copy whichever one is closest to what you're building.
+Missing a service you use? You can add it yourself. This is the guide to the Integration SDK - how an integration hangs together, how Client Reporter finds it, and how to build and test one. Every bundled integration uses this exact same SDK, so honestly the best reference of all is the `app/Integrations/*` folder in the core app - copy whichever one is closest to what you're building.
 
 ## How integrations are distributed and discovered
 
@@ -22,23 +22,23 @@ Your own integrations can ship as Composer packages. A package points at the int
 }
 ```
 
-Then anyone can install it with a plain `composer require` — no marketplace, no registration, nothing to approve.
+Then anyone can install it with a plain `composer require` - no marketplace, no registration, nothing to approve.
 
 For your **own** integrations you don't even need Composer: anything you drop into the git-ignored `extensions/` directory is autoloaded and discovered automatically (see [Keeping custom integrations across updates](#keeping-custom-integrations-across-updates) below).
 
 ## Scaffolding an integration
 
-Don't start from a blank file — let the generator write the skeleton for you. Just give it a name:
+Don't start from a blank file - let the generator write the skeleton for you. Just give it a name:
 
 ```bash
 php artisan client-reporter:make-integration "Matomo"
 ```
 
-That drops a ready-to-fill package into `extensions/matomo/` — its own `composer.json` (with a PSR-4 autoload map and an `extra.client-reporter.integrations` entry), the integration class (manifest, config fields, `verify()`) and a collector. Because it lives in `extensions/`, Client Reporter **autoloads and discovers it automatically** — there's nothing to register and no `composer require` to run. Fill it in, run `php artisan optimize:clear`, and it appears in the integrations catalog.
+That drops a ready-to-fill package into `extensions/matomo/` - its own `composer.json` (with a PSR-4 autoload map and an `extra.client-reporter.integrations` entry), the integration class (manifest, config fields, `verify()`) and a collector. Because it lives in `extensions/`, Client Reporter **autoloads and discovers it automatically** - there's nothing to register and no `composer require` to run. Fill it in, run `php artisan optimize:clear`, and it appears in the integrations catalog.
 
 ## The shape of an integration
 
-There are only three methods you *have* to write — `manifest()`, `configFields()` and `verify()` — and then a handful of optional hooks (collectors, report blocks, setup steps, workspace connections) you reach for when you need them. Here's each piece.
+There are only three methods you *have* to write - `manifest()`, `configFields()` and `verify()` - and then a handful of optional hooks (collectors, report blocks, setup steps, workspace connections) you reach for when you need them. Here's each piece.
 
 ### Manifest
 
@@ -116,11 +116,11 @@ public function setupSteps(): array
 
 ### Collectors
 
-`collectors()` returns the units that fetch data on a schedule and persist it as metrics and snapshots. A collector implements `App\Integrations\Contracts\Collector`, declares a key and interval, and writes `metric` values plus an optional `snapshot` (structured JSON for tables like top pages). Mirror an existing collector — `app/Integrations/Plausible/PlausibleCollector.php` is a good template. Because the report blocks are category-based, emitting the standard `analytics.*` metrics and a matching snapshot means your provider renders in the generic analytics blocks with **no new block code**.
+`collectors()` returns the units that fetch data on a schedule and persist it as metrics and snapshots. A collector implements `App\Integrations\Contracts\Collector`, declares a key and interval, and writes `metric` values plus an optional `snapshot` (structured JSON for tables like top pages). Mirror an existing collector - `app/Integrations/Plausible/PlausibleCollector.php` is a good template. Because the report blocks are category-based, emitting the standard `analytics.*` metrics and a matching snapshot means your provider renders in the generic analytics blocks with **no new block code**.
 
 ### Talking to the provider
 
-Put the HTTP calls in a small client class that extends `App\Integrations\Support\AbstractHttpClient`. It gives you timeouts, retries on connection errors and 5xx responses, an identifiable user-agent, and — when the address came from the user (`baseUrl()` returns it) — the outbound URL guard that stops a connection being pointed at a private network. Implement `provider()` (the name used in error messages), call `$this->get()` / `$this->post()`, and pass the response through `$this->guard()`: a 401/403 raises an `AuthenticationException` (collection stops until someone reconnects), a 429 raises `RateLimitedException`, and anything else an `IntegrationException` with a message safe to show staff. Never build error messages from the raw response body or the request URL.
+Put the HTTP calls in a small client class that extends `App\Integrations\Support\AbstractHttpClient`. It gives you timeouts, retries on connection errors and 5xx responses, an identifiable user-agent, and - when the address came from the user (`baseUrl()` returns it) - the outbound URL guard that stops a connection being pointed at a private network. Implement `provider()` (the name used in error messages), call `$this->get()` / `$this->post()`, and pass the response through `$this->guard()`: a 401/403 raises an `AuthenticationException` (collection stops until someone reconnects), a 429 raises `RateLimitedException`, and anything else an `IntegrationException` with a message safe to show staff. Never build error messages from the raw response body or the request URL.
 
 If your integration supplies store data, implement `providesEcommerce()` so the shared Ecommerce report block can read it.
 
@@ -132,32 +132,32 @@ If your integration supplies store data, implement `providesEcommerce()` so the 
 
 If one credential naturally covers many sites (an account-wide API key or a single OAuth login), opt into "connect once for the whole workspace":
 
-- `supportsWorkspaceScope(): bool` — return `true`.
-- `discoverConnections(WorkspaceIntegration $workspace): array` — list the entities the account exposes (as `DiscoveredConnection` DTOs) so Client Reporter can auto-match them to sites (by URL) or clients (by email/name).
-- `workspaceMapsTo(): string` — `'site'` (default) or `'client'` (billing integrations).
-- `onlyWorkspaceScope(): bool` — return `true` if no per-site connection exists at all.
+- `supportsWorkspaceScope(): bool` - return `true`.
+- `discoverConnections(WorkspaceIntegration $workspace): array` - list the entities the account exposes (as `DiscoveredConnection` DTOs) so Client Reporter can auto-match them to sites (by URL) or clients (by email/name).
+- `workspaceMapsTo(): string` - `'site'` (default) or `'client'` (billing integrations).
+- `onlyWorkspaceScope(): bool` - return `true` if no per-site connection exists at all.
 
 See `WorkspaceSetup` and the analytics/billing integrations for the full pattern.
 
 ## Testing your integration
 
-You don't have to write the boilerplate checks yourself — there are contract test helpers that make sure your integration behaves the way the SDK expects (the manifest, config, auth and collector all line up). Extend `App\Integrations\Testing\IntegrationContractAssertions` in your test, and peek at `tests/Feature/Integrations/IntegrationContractComplianceTest.php` to see how the bundled ones do it. For the data side, fake the provider's HTTP calls with Laravel's `Http::fake()` and assert your collector writes the metrics and snapshot you expect — no real network needed.
+You don't have to write the boilerplate checks yourself - there are contract test helpers that make sure your integration behaves the way the SDK expects (the manifest, config, auth and collector all line up). Extend `App\Integrations\Testing\IntegrationContractAssertions` in your test, and peek at `tests/Feature/Integrations/IntegrationContractComplianceTest.php` to see how the bundled ones do it. For the data side, fake the provider's HTTP calls with Laravel's `Http::fake()` and assert your collector writes the metrics and snapshot you expect - no real network needed.
 
 ## Keeping custom integrations across updates
 
 Your integrations should never be affected when you update Client Reporter, because they live **outside the core repository**:
 
-- The **`extensions/` directory is git-ignored** (only its README is tracked). Anything you put there — including whatever `make-integration` scaffolds — is invisible to git, so `git pull`, a fresh release, or even `git clean` never touches it.
-- Client Reporter **autoloads** each `extensions/<pkg>/` package from its own `autoload.psr-4` map and **discovers** the classes in its `extra.client-reporter.integrations` — with no `composer require` and no edit to any tracked file (`config/client-reporter.php` and `composer.json` stay untouched).
+- The **`extensions/` directory is git-ignored** (only its README is tracked). Anything you put there - including whatever `make-integration` scaffolds - is invisible to git, so `git pull`, a fresh release, or even `git clean` never touches it.
+- Client Reporter **autoloads** each `extensions/<pkg>/` package from its own `autoload.psr-4` map and **discovers** the classes in its `extra.client-reporter.integrations` - with no `composer require` and no edit to any tracked file (`config/client-reporter.php` and `composer.json` stay untouched).
 
-So the update-safe recipe is simply: keep custom integrations in `extensions/`. To update Client Reporter, pull the new release and run `php artisan client-reporter:update` — your `extensions/` folder is left exactly as it was.
+So the update-safe recipe is simply: keep custom integrations in `extensions/`. To update Client Reporter, pull the new release and run `php artisan client-reporter:update` - your `extensions/` folder is left exactly as it was.
 
 Two variations, both still update-safe:
 
 - **Register a class explicitly** (for one that's autoloadable some other way): copy `config/client-reporter.local.php.example` to `config/client-reporter.local.php` (also git-ignored) and list the class under `integrations`.
-- **Install a published package** with `composer require`. This is the one case that edits tracked files (`composer.json`/`composer.lock`); those changes are additive and normally merge cleanly on update — just re-run `composer install` afterwards.
+- **Install a published package** with `composer require`. This is the one case that edits tracked files (`composer.json`/`composer.lock`); those changes are additive and normally merge cleanly on update - just re-run `composer install` afterwards.
 
-Avoid adding a custom integration by editing `config/client-reporter.php` or dropping classes into `app/` — those are core files, and your changes there can conflict on update.
+Avoid adding a custom integration by editing `config/client-reporter.php` or dropping classes into `app/` - those are core files, and your changes there can conflict on update.
 
 ## Publishing your integration
 
@@ -165,6 +165,6 @@ Once it works, sharing it is easy:
 
 1. Drop your integration class into a Composer package.
 2. Point at it with `extra.client-reporter.integrations` in that package's `composer.json` (see above).
-3. Publish the package. Anyone who `composer require`s it gets your integration in their catalog automatically — that's the whole distribution story.
+3. Publish the package. Anyone who `composer require`s it gets your integration in their catalog automatically - that's the whole distribution story.
 
 If you build something useful, I'd love to hear about it.

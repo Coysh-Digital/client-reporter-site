@@ -20,7 +20,7 @@ Connecting per site:
 3. Click **Connect Google account** and sign in with an account that can view this property.
 4. You come back connected.
 
-In the workspace flow, you connect the Google account first, then click **Find sites** to list every GA4 property on the account — each one is auto-matched to a site by its web stream URL where it can be, and you confirm the mapping. (Properties with no web data stream get skipped, since there's no URL to match them to a site.)
+In the workspace flow, you connect the Google account first, then click **Find sites** to list every GA4 property on the account - each one is auto-matched to a site by its web stream URL where it can be, and you confirm the mapping. (Properties with no web data stream get skipped, since there's no URL to match them to a site.)
 
 ## Google Ads
 
@@ -39,7 +39,7 @@ Google Ads feeds the **Ads summary** block (spend, clicks, impressions and conve
 ## Plausible
 
 - **Auth:** API key (a Stats API key).
-- **What you need:** the API key (account-level), the **Site ID** (your site's domain, e.g. `example.com`, per site), and — only for self-hosted Plausible — the instance URL. Leave the URL blank for `plausible.io`.
+- **What you need:** the API key (account-level), the **Site ID** (your site's domain, e.g. `example.com`, per site), and - only for self-hosted Plausible - the instance URL. Leave the URL blank for `plausible.io`.
 
 Connecting:
 
@@ -74,7 +74,7 @@ Connecting:
 ## Umami
 
 - **Auth:** API key. Works with Umami Cloud and self-hosted Umami.
-- **What you need:** the API key (account-level), the **Website ID** (the website's UUID, per site), and — only for self-hosted instances — the **API base URL**. Leave the base URL blank for Umami Cloud.
+- **What you need:** the API key (account-level), the **Website ID** (the website's UUID, per site), and - only for self-hosted instances - the **API base URL**. Leave the base URL blank for Umami Cloud.
 
 Connecting:
 
@@ -84,18 +84,18 @@ Connecting:
 
 ## Search Console is separate
 
-Google's *search* data (clicks, impressions, click-through rate, average position and top queries) comes from **Google Search Console**, which is its own integration in the **Search** category — not one of the analytics providers above. It also uses Google OAuth and is matched to a verified property (a URL like `https://example.com/` or a domain property like `sc-domain:example.com`). It feeds the **Search performance** report block.
+Google's *search* data (clicks, impressions, click-through rate, average position and top queries) comes from **Google Search Console**, which is its own integration in the **Search** category - not one of the analytics providers above. It also uses Google OAuth and is matched to a verified property (a URL like `https://example.com/` or a domain property like `sc-domain:example.com`). It feeds the **Search performance** report block.
 
 ## Which report blocks analytics feeds
 
 The metrics these integrations collect are what power the analytics blocks in the report builder:
 
-- **Analytics summary** — headline visitors, sessions and page views.
-- **Analytics chart** — the trend over the reporting period.
-- **Top pages** — most-visited pages.
-- **Traffic sources** — where visitors came from.
-- **Top countries** and **Top devices** — audience breakdowns.
-- **Custom events** — provider events where available.
-- **Ads summary** — Google Ads spend, clicks, impressions and conversions.
+- **Analytics summary** - headline visitors, sessions and page views.
+- **Analytics chart** - the trend over the reporting period.
+- **Top pages** - most-visited pages.
+- **Traffic sources** - where visitors came from.
+- **Top countries** and **Top devices** - audience breakdowns.
+- **Custom events** - provider events where available.
+- **Ads summary** - Google Ads spend, clicks, impressions and conversions.
 
 See [Reports](/docs/reports) for adding and configuring these blocks.

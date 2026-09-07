@@ -4,7 +4,7 @@
 
 The WordPress integration hooks a WordPress site up to Client Reporter through a small companion plugin, so you can pull CMS data into your reports.
 
-That companion plugin lives in its own repo, [coysh-digital/client-reporter-wordpress](https://github.com/coysh-digital/client-reporter-wordpress). It hands back read-only data over HMAC-signed requests, and that's all it does. Client Reporter only ever reads from the site — it never runs updates, installs plugins, or changes anything.
+That companion plugin lives in its own repo, [coysh-digital/client-reporter-wordpress](https://github.com/coysh-digital/client-reporter-wordpress). It hands back read-only data over HMAC-signed requests, and that's all it does. Client Reporter only ever reads from the site - it never runs updates, installs plugins, or changes anything.
 
 ![WordPress connector plugin](/images/wordpress-plugin.png)
 
@@ -23,7 +23,7 @@ The plugin needs WordPress 6.0+ and PHP 7.4+. Once it's active, it registers a s
 Companion connectors authenticate with a single shared secret that Client Reporter calls the **connection code**. Client Reporter generates it; you paste it into the plugin. That same secret is what both ends use to sign and verify every request.
 
 1. In Client Reporter, open the site, choose **Add integration → WordPress**, and enter the **WordPress site URL** (the public URL of the site, e.g. `https://example.com`).
-2. Save. Client Reporter generates a random connection code and shows it on the setup screen. (Behind the scenes it stores this code as an encrypted credential — see [Security](/docs/security).)
+2. Save. Client Reporter generates a random connection code and shows it on the setup screen. (Behind the scenes it stores this code as an encrypted credential - see [Security](/docs/security).)
 3. Over in WordPress, open **Settings → Client Reporter**, paste the connection code into the **Connection code** field, and press **Save connection code**. The screen will then show *Connection code saved*. WordPress stores the code in the `client_reporter_secret` option.
 4. Come back to Client Reporter and press **Connect & verify**.
 
@@ -68,7 +68,7 @@ If WooCommerce isn't installed or active, the connector just reports that it's i
 
 Client Reporter always **pulls**; the plugin only ever responds, read-only. Every request is signed with HMAC-SHA256 over the request method, path, timestamp, a random nonce and a hash of the (empty) body, using the shared connection code. The plugin rejects unsigned or wrongly-signed requests, requests whose timestamp is outside a ±300-second window, and replayed nonces.
 
-For the full scheme — including how the connection code is stored encrypted at rest in Client Reporter — see [Security](/docs/security).
+For the full scheme - including how the connection code is stored encrypted at rest in Client Reporter - see [Security](/docs/security).
 
 ## Troubleshooting
 
@@ -76,8 +76,8 @@ For the full scheme — including how the connection code is stored encrypted at
 
 **"Invalid signature" or "Request timestamp out of range" errors.** Signatures are time-sensitive: the plugin rejects any request whose timestamp differs from its own clock by more than 300 seconds. If the WordPress server's clock is badly out of sync (common on misconfigured or containerised hosts), fix the server time (NTP) and try again.
 
-**"Nonce already used".** Each request carries a one-time nonce; this only shows up if a request is genuinely replayed. Just verify again — a fresh request uses a new nonce.
+**"Nonce already used".** Each request carries a one-time nonce; this only shows up if a request is genuinely replayed. Just verify again - a fresh request uses a new nonce.
 
 **"Could not reach the website".** Client Reporter couldn't connect to the site URL. Check the URL is correct and public, that the site is up, that the plugin is active, and that no firewall or security plugin is blocking the `/wp-json/client-reporter/v1/` REST routes.
 
-**"Not as a WordPress Client Reporter connector".** The URL responded, but not with the expected connector payload — usually a wrong URL (pointing at a different site or a caching/placeholder page) or the plugin being inactive. Confirm the plugin is active and that `https://<your-site>/wp-json/client-reporter/v1/verify` is served by this WordPress install.
+**"Not as a WordPress Client Reporter connector".** The URL responded, but not with the expected connector payload - usually a wrong URL (pointing at a different site or a caching/placeholder page) or the plugin being inactive. Confirm the plugin is active and that `https://<your-site>/wp-json/client-reporter/v1/verify` is served by this WordPress install.

@@ -4,13 +4,13 @@
 
 This section walks through Client Reporter's security model and points you to how to report vulnerabilities.
 
-Client Reporter stores credentials for third-party services and generates shareable client reports, so a few areas deserve extra care: how the companion connectors authenticate, how integration credentials are stored, and the tokens that grant access to shared reports. To report a vulnerability, please follow the process in [SECURITY.md](https://github.com/coysh-digital/client-reporter/security/policy) — don't open a public issue.
+Client Reporter stores credentials for third-party services and generates shareable client reports, so a few areas deserve extra care: how the companion connectors authenticate, how integration credentials are stored, and the tokens that grant access to shared reports. To report a vulnerability, please follow the process in [SECURITY.md](https://github.com/coysh-digital/client-reporter/security/policy) - don't open a public issue.
 
 ## Companion-connector authentication
 
 The WordPress and Craft integrations talk to a companion plugin installed on the client's site. The model here is deliberately narrow: **Client Reporter always pulls, and the plugin only ever responds with read-only data.** There's no inbound channel from the site into Client Reporter, and the plugin performs no updates, installs nothing, and exposes no secrets, files or database access.
 
-**Shared secret (the connection code).** When you add a connector-based integration, Client Reporter generates a random 48-character secret — the *connection code* — and stores it as an encrypted credential. You paste the same code into the plugin's settings (WordPress: **Settings → Client Reporter**, stored in the `client_reporter_secret` option; Craft: the plugin's **Connection code** setting, which can also be an environment variable). Both ends now hold the same secret.
+**Shared secret (the connection code).** When you add a connector-based integration, Client Reporter generates a random 48-character secret - the *connection code* - and stores it as an encrypted credential. You paste the same code into the plugin's settings (WordPress: **Settings → Client Reporter**, stored in the `client_reporter_secret` option; Craft: the plugin's **Connection code** setting, which can also be an environment variable). Both ends now hold the same secret.
 
 **Signed requests.** Every request Client Reporter makes to a connector is a `GET` signed with HMAC-SHA256. The signature covers a newline-joined payload of:
 
@@ -30,22 +30,22 @@ See the per-platform guides for setup details: [WordPress](/docs/wordpress) and 
 
 ## Encrypted credential storage at rest
 
-Integration credentials — connector connection codes, API keys, OAuth refresh tokens and the like — are stored encrypted in the database. Both `SiteIntegration` (a connection for one site) and `WorkspaceIntegration` (a shared, account-level connection) cast their `credentials` attribute with Laravel's `encrypted:array` cast, so the values are encrypted with the application's `APP_KEY` (AES-256) before they're written and decrypted only when used. The `credentials` attribute is also hidden from array/JSON serialization, so it isn't accidentally exposed through model output.
+Integration credentials - connector connection codes, API keys, OAuth refresh tokens and the like - are stored encrypted in the database. Both `SiteIntegration` (a connection for one site) and `WorkspaceIntegration` (a shared, account-level connection) cast their `credentials` attribute with Laravel's `encrypted:array` cast, so the values are encrypted with the application's `APP_KEY` (AES-256) before they're written and decrypted only when used. The `credentials` attribute is also hidden from array/JSON serialization, so it isn't accidentally exposed through model output.
 
 What this means in practice:
 
 - A database dump on its own doesn't reveal any usable credential; an attacker would also need `APP_KEY`.
-- Keeping `APP_KEY` secret (and out of version control) is essential — see hardening below.
+- Keeping `APP_KEY` secret (and out of version control) is essential - see hardening below.
 - Rotating `APP_KEY` invalidates all stored credentials, which would then need to be re-entered.
 
-**Treat `APP_KEY` as the master key.** Everything encrypted at rest — every integration credential, the AI provider key and users' two-factor secrets — is unreadable without it. If it is lost there is no recovery path other than re-entering each credential and having every user set up two-factor again, so keep a copy of `.env` with your database backups (see [Updating](/docs/updating)). Never regenerate it on a live install.
+**Treat `APP_KEY` as the master key.** Everything encrypted at rest - every integration credential, the AI provider key and users' two-factor secrets - is unreadable without it. If it is lost there is no recovery path other than re-entering each credential and having every user set up two-factor again, so keep a copy of `.env` with your database backups (see [Updating](/docs/updating)). Never regenerate it on a live install.
 
 ## Outbound requests and private networks
 
 Client Reporter fetches from addresses that staff type in: site URLs (favicons), self-hosted analytics and monitoring instances, the WordPress/Craft companion plugins and site-import sources. Every one of those requests goes through a single guard (`App\Support\Http\OutboundUrl`):
 
 - only `http://` and `https://` are allowed, and a URL may not carry a username or password;
-- the host must resolve to a **public** address — loopback, private (RFC 1918), link-local (including cloud metadata endpoints such as `169.254.169.254`), carrier-grade NAT, multicast and reserved ranges are refused, for IPv4 and IPv6 alike;
+- the host must resolve to a **public** address - loopback, private (RFC 1918), link-local (including cloud metadata endpoints such as `169.254.169.254`), carrier-grade NAT, multicast and reserved ranges are refused, for IPv4 and IPv6 alike;
 - redirects are followed at most three hops and every hop is checked again.
 
 This stops a staff account being used to make the server read from its own network. If a service you connect legitimately lives on a private address, list its hostname in `CLIENT_REPORTER_ALLOWED_HOSTS` (comma-separated), or set `CLIENT_REPORTER_ALLOW_PRIVATE_URLS=true` to turn the check off for the whole install. Prefer the allow-list.
@@ -98,8 +98,8 @@ Client Reporter is self-hosted, so the security of an installation depends partl
 
 - **Serve everything over HTTPS.** Connection codes, share links and session cookies all travel over the network; TLS protects them in transit. Set `APP_URL` to the `https://` origin, keep `SESSION_SECURE_COOKIE=true` (the default in `.env.example`) and enforce HTTPS at the web server or load balancer. If a proxy terminates TLS, set `TRUSTED_PROXIES` so the app knows the request was secure.
 - **Keep debug off.** `.env.example` ships with `APP_ENV=production` and `APP_DEBUG=false`; a debug error page prints configuration, including secrets, to whoever triggers it.
-- **Protect `APP_KEY`.** It encrypts all stored credentials. Generate a strong key (`php artisan key:generate`), keep it out of version control, and back it up somewhere safe — losing it means re-entering every integration credential; leaking it undermines credential encryption.
+- **Protect `APP_KEY`.** It encrypts all stored credentials. Generate a strong key (`php artisan key:generate`), keep it out of version control, and back it up somewhere safe - losing it means re-entering every integration credential; leaking it undermines credential encryption.
 - **Lock down file permissions.** The web server needs write access only to `storage/` and `bootstrap/cache/`; the rest of the application (especially `.env`) shouldn't be world-readable, and `.env` must never be web-accessible.
 - **Keep everything updated.** Apply Client Reporter, PHP, and dependency updates promptly, and keep the companion plugins on client sites up to date too. Security fixes land on the default branch ahead of tagged releases (see [SECURITY.md](https://github.com/coysh-digital/client-reporter/security/policy)).
-- **Restrict admin access.** Limit who holds Administrator and Manager accounts, use strong unique passwords, and consider restricting the admin interface by network (VPN/IP allow-list) where that's practical. Remember that the client portal is a separate, restricted surface — client users can only ever reach their own sites and reports.
+- **Restrict admin access.** Limit who holds Administrator and Manager accounts, use strong unique passwords, and consider restricting the admin interface by network (VPN/IP allow-list) where that's practical. Remember that the client portal is a separate, restricted surface - client users can only ever reach their own sites and reports.
 - **Rotate secrets when needed.** If a connection code or credential may have been exposed, rotate it: generate a new connection code and re-paste it into the plugin, or re-enter the affected credential.

@@ -4,12 +4,12 @@
 
 Here's how to keep an existing Client Reporter install up to date.
 
-Since Client Reporter is source you clone, updating just means pulling the latest code and running the usual Laravel update steps — installing any new dependencies, running database migrations and rebuilding the front-end assets. It never updates itself, so you're always in control of when and how you upgrade.
+Since Client Reporter is source you clone, updating just means pulling the latest code and running the usual Laravel update steps - installing any new dependencies, running database migrations and rebuilding the front-end assets. It never updates itself, so you're always in control of when and how you upgrade.
 
 ## Before you update
 
 - **Back up your database.** For SQLite, copy `database/database.sqlite`; for MySQL/PostgreSQL, take a dump. Migrations only go forward, so there's no undo.
-- **Back up `.env`** — and keep `APP_KEY` safe in particular, since it's what decrypts your stored integration credentials, the AI provider key and users' two-factor secrets. Losing it means re-entering every credential. A complete backup is the database, `.env`, and `storage/app/public/` (uploaded logos and cached favicons).
+- **Back up `.env`** - and keep `APP_KEY` safe in particular, since it's what decrypts your stored integration credentials, the AI provider key and users' two-factor secrets. Losing it means re-entering every credential. A complete backup is the database, `.env`, and `storage/app/public/` (uploaded logos and cached favicons).
 - **Read the [changelog](https://github.com/coysh-digital/client-reporter/blob/main/CHANGELOG.md)** for the release you're moving to, and take note of anything in a **BREAKING** or upgrade-notes section.
 - It's worth flipping on maintenance mode while you upgrade: `php artisan down` (then `php artisan up` when you're done).
 
@@ -31,7 +31,7 @@ npm install && npm run build
 php artisan client-reporter:update
 ```
 
-`client-reporter:update` is a little convenience command that wraps up the last of the upgrade: it runs `php artisan migrate --force` and then `php artisan optimize:clear`. It does **not** download or replace your application code — always pull with git/composer first, then run it. Pass `--force` to skip the confirmation prompt (handy in scripts):
+`client-reporter:update` is a little convenience command that wraps up the last of the upgrade: it runs `php artisan migrate --force` and then `php artisan optimize:clear`. It does **not** download or replace your application code - always pull with git/composer first, then run it. Pass `--force` to skip the confirmation prompt (handy in scripts):
 
 ```bash
 php artisan client-reporter:update --force
@@ -56,7 +56,7 @@ If you can't run git/composer/npm on the server, prepare the release on a machin
    ```
    php artisan client-reporter:update --force
    ```
-   If you've got no way to run artisan at all, the next scheduled `schedule:run` will keep the app ticking over — but sort out running the migrations somehow before you rely on any new features, because pending migrations won't apply themselves.
+   If you've got no way to run artisan at all, the next scheduled `schedule:run` will keep the app ticking over - but sort out running the migrations somehow before you rely on any new features, because pending migrations won't apply themselves.
 
 ## Caches
 
@@ -83,7 +83,7 @@ The config for this lives under `updates.*` in `config/client-reporter.php` (end
 ## Following releases
 
 - Watch or star the repo at [github.com/coysh-digital/client-reporter](https://github.com/coysh-digital/client-reporter) to get release notifications.
-- Read the [CHANGELOG.md](https://github.com/coysh-digital/client-reporter/blob/main/CHANGELOG.md) — it follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/), so breaking changes are always called out.
+- Read the [CHANGELOG.md](https://github.com/coysh-digital/client-reporter/blob/main/CHANGELOG.md) - it follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/), so breaking changes are always called out.
 - Update the companion WordPress and Craft plugins when a release mentions new minimum versions; the app tells you about plugin compatibility.
 
 See also [Installation](/docs/installation) and [Shared hosting](/docs/shared-hosting).
