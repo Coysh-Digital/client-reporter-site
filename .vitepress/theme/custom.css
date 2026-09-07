@@ -43,12 +43,21 @@
     --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     --vp-font-family-mono: var(--cr-mono);
     --vp-code-block-bg: #201f24;
+    --vp-code-block-color: #e1e4e8;
+    --vp-code-lang-color: #aaa5ad;
     --vp-code-bg: #f3f0ea;
     --vp-c-tip-1: var(--cr-brass);
     --vp-c-tip-soft: var(--cr-brass-soft);
     --vp-nav-bg-color: rgba(250, 249, 246, 0.86);
     --vp-sidebar-bg-color: var(--cr-paper);
     --vp-layout-max-width: 1320px;
+}
+
+/* Code blocks stay dark even though the rest of the site is light. VitePress
+   otherwise chooses Shiki's light token colours, which have too little
+   contrast against our dark block background. */
+html:not(.dark) .vp-doc .vp-code span {
+    color: var(--shiki-dark, var(--vp-code-block-color));
 }
 
 /* Headings in the docs use the same serif as the app's page titles. */

@@ -681,10 +681,12 @@ a.plate-inline {
 .code code {
     font-family: inherit;
     color: inherit;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
     white-space: pre;
 }
 
-.start code,
 .lead code {
     font-family: var(--cr-mono);
     font-size: 0.86em;
