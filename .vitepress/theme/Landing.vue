@@ -58,20 +58,21 @@ const integrations = [
                 </div>
             </div>
 
+            <!-- A short film in place of a still screenshot. It never autoplays: the visitor presses play. -->
             <figure class="shot-figure">
-                <div class="browser">
-                    <div class="browser-bar">
-                        <span class="browser-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-                        <span class="browser-url">clientreporter.yourdomain.com</span>
-                    </div>
-                    <img
-                        :src="withBase('/images/dashboard.png')"
-                        alt="A screenshot of the Client Reporter dashboard: every client site, its health, and the reports that are ready to send"
-                        width="1440"
-                        height="900"
-                        loading="eager"
-                    />
+                <div class="film">
+                    <video
+                        :src="withBase('/video/client-reporter.mp4')"
+                        :poster="withBase('/video/client-reporter-poster.jpg')"
+                        width="1920"
+                        height="1080"
+                        controls
+                        playsinline
+                        preload="metadata"
+                        aria-label="A 22-second film: Client Reporter connecting a site's services and turning the numbers into one agency-branded report"
+                    ></video>
                 </div>
+                <figcaption class="film-caption">A 22-second tour. The agencies, clients and numbers in it are made up.</figcaption>
             </figure>
         </header>
 
@@ -306,62 +307,33 @@ p {
     border-bottom-color: currentColor;
 }
 
-/* The hero screenshot, shown in a light browser frame so it reads clearly as
-   a screenshot of the running app. */
+/* The hero film. The frame matches the film's own paper ground, so the edge
+   reads as a soft card rather than a letterbox. */
 .shot-figure {
     margin: clamp(44px, 6vw, 72px) auto 0;
     max-width: 1040px;
     padding: 0 var(--pad);
 }
 
-.browser {
+.film {
     border: 1px solid var(--cr-line-strong);
     border-radius: 12px;
     overflow: hidden;
-    background: var(--cr-surface);
+    background: var(--cr-paper);
     box-shadow: 0 40px 90px -45px rgba(27, 26, 24, 0.4);
 }
 
-.browser-bar {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 11px 16px;
-    background: #f1ede6;
-    border-bottom: 1px solid var(--cr-line);
-}
-
-.browser-dots {
-    display: inline-flex;
-    gap: 6px;
-    flex-shrink: 0;
-}
-
-.browser-dots span {
-    width: 11px;
-    height: 11px;
-    border-radius: 999px;
-    background: #d3ccbf;
-}
-
-.browser-url {
-    flex: 1;
-    text-align: center;
-    max-width: 340px;
-    margin: 0 auto;
-    padding: 4px 14px;
-    background: var(--cr-surface);
-    border: 1px solid var(--cr-line);
-    border-radius: 999px;
-    font-family: var(--cr-mono);
-    font-size: 0.76rem;
-    color: var(--cr-faint);
-}
-
-.browser img {
+.film video {
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: 16 / 9;
+}
+
+.film-caption {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--cr-faint);
 }
 
 /* Framed report preview. */
